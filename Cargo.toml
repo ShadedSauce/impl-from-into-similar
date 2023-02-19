@@ -2,6 +2,8 @@
 name = "impl-from-into-similar"
 version = "0.1.0"
 edition = "2021"
+description = "Implement Into to any struct to convert between structs sharing similar fields. Uses serde_json."
+license = "idc"
 
 [lib]
 proc-macro = true
