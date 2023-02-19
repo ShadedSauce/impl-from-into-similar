@@ -1,8 +1,6 @@
 use proc_macro::{TokenStream};
-use std::fmt::format;
-use proc_macro2::Span;
-use quote::{format_ident, quote};
-use syn::{Expr, Ident, Macro, parse_macro_input, parse_str, Type};
+use quote::{quote};
+use syn::{parse_macro_input, Type};
 use syn::parse::{Parse, ParseStream};
 
 #[proc_macro]
@@ -12,13 +10,14 @@ pub fn impl_into_similar(input: TokenStream) -> TokenStream {
     let into = input.into;
 
     let output = quote! {
-        impl TryInto<#into> for #from {
-            type Error = serde_json::Error;
+        impl TryFrom<#from> for #into {
+            type Error = anyhow::Error;
 
-            fn try_into(self) -> Result<#into, Self::Error> {
-                let serialized = serde_json::to_string(&self)?;
+            fn try_from(from: #from) -> Result<#into, Self::Error> {
+                let serialized = serde_json::to_string(&from)?;
 
                 serde_json::from_str(&serialized)
+                    .map_err(|e| anyhow::anyhow!("Failed to covert between types"))
             }
         }
     };
