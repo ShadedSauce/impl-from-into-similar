@@ -4,7 +4,7 @@ use syn::{parse_macro_input, Type};
 use syn::parse::{Parse, ParseStream};
 
 #[proc_macro]
-pub fn impl_into_similar(input: TokenStream) -> TokenStream {
+pub fn impl_try_from_similar(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as ImplIntoSimilarMacroInput);
     let from = input.from;
     let into = input.into;

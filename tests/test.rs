@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod tests {
     use serde::{Deserialize, Serialize};
-    use impl_from_into_similar::{impl_into_similar};
+    use impl_from_into_similar::{impl_try_from_similar};
 
     #[test]
     fn test_impl_into() {
@@ -20,7 +20,7 @@ mod tests {
             f3: String
         }
 
-        impl_into_similar!(StructB, StructA);
+        impl_try_from_similar!(StructB, StructA);
 
         let a = StructA {
             f1: 1,
